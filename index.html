@@ -434,7 +434,7 @@
             const item = document.createElement('div');
             item.className = 'toggle-item';
             item.innerHTML = `
-                <span><img src="${data.logo}">${p} <small style="color:#888;">(${data.m || data.minutes} dk)</small></span>
+                <span><img src="${data.logo}">${p}</span>
                 <label class="switch">
                     <input type="checkbox" ${data.active ? 'checked' : ''} onchange="togglePlatformStatus('${p}', this.checked)">
                     <span class="slider"></span>
