@@ -10,7 +10,7 @@
             --panel-bg: #ffffff;
             --text-color: #111111;
             --accent-color: #5c67f2;
-            --accent-hover: #4853e0;
+            --accent-hover: #3842bc;
             --border-color: #ddd;
             --box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
@@ -62,7 +62,7 @@
         .mesaj-kutusu { background: var(--panel-bg); color: var(--text-color); padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 5px solid var(--accent-color); display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .mesaj-kutusu.bot-mesaj { background: #f2e8f8; border-left-color: #d048f6; color: #111; }
         .mesaj-kutusu img { width: 30px; flex-shrink: 0; }
-        .info { flex: 1; line-height: 1.6; word-break: break-all; }
+        .info { flex: 1; font-size: 14px; line-height: 1.6; word-break: break-all; }
         .del-btn { flex-shrink: 0; width: 50px; background: #ff4d4d; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
 
         .panel { background: var(--panel-bg); color: var(--text-color); padding: 15px; border-radius: 12px; box-shadow: var(--box-shadow); margin-bottom: 20px; position: relative; border: 1px solid var(--border-color); }
@@ -110,6 +110,7 @@
             transition: all 0.2s ease;
         }
         .settings-toggle-btn:hover {
+            background-color: #f7f7fd;
             transform: scale(1.02);
             box-shadow: 0 3px 8px rgba(0,0,0,0.09);
         }
@@ -455,14 +456,14 @@
 <div id="toastContainer"></div>
 
 <div class="container">
-    <!--    <div class="theme-selector-panel">-->
-    <!--        <span><strong>Özel Gün Teması:</strong></span>-->
-    <!--        <select id="themeSelector" onchange="changeTheme(this.value)">-->
-    <!--            <option value="normal">Normal Tema</option>-->
-    <!--            <option value="yilbasi">🎄 Yılbaşı Teması</option>-->
-    <!--            <option value="cadilar">🎃 Cadılar Bayramı</option>-->
-    <!--        </select>-->
-    <!--    </div>-->
+<!--        <div class="theme-selector-panel">-->
+<!--            <span><strong>Özel Gün Teması:</strong></span>-->
+<!--            <select id="themeSelector" onchange="changeTheme(this.value)">-->
+<!--                <option value="normal">Normal Tema</option>-->
+<!--                <option value="yilbasi">🎄 Yılbaşı Teması</option>-->
+<!--                <option value="cadilar">🎃 Cadılar Bayramı</option>-->
+<!--            </select>-->
+<!--        </div>-->
 
     <h3 style="text-align: center;">Hesaplar (<span id="accCount">0</span>)</h3>
     <div id="dataList">
@@ -472,7 +473,7 @@
         </div>
     </div>
     <div class="panel">
-        <button id="toggleSettingsBtn" class="settings-toggle-btn state-dondu" title="Ayarlar ve Suarez Durumu">
+        <button id="toggleSettingsBtn" class="settings-toggle-btn" title="Ayarlar ve Suarez Durumu">
             <div class="zzz-container">
                 <span class="zzz">z</span>
                 <span class="zzz">Z</span>
@@ -702,7 +703,7 @@
 
     function updateBotIconState(action) {
         const btn = document.getElementById('toggleSettingsBtn');
-        btn.classList.remove('state-uyuyor', 'state-bekliyor', 'state-calisiyor', 'state-dondu');
+        btn.classList.remove('state-uyuyor', 'state-bekliyor', 'state-calisiyor', 'state-dondu', 'state-isinma','state-hata','state-kopuk');
 
         if (popupTimer) {
             clearTimeout(popupTimer);
@@ -739,7 +740,7 @@
         }
     }
     // set(window.botRef, 'code');
-    
+
     function startRandomizedWaitingPopups() {
         const triggerPopup = () => {
             const randomText = waitingPhrases[Math.floor(Math.random() * waitingPhrases.length)];
