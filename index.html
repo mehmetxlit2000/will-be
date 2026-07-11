@@ -81,7 +81,7 @@
         .btn-container button { flex: 1; min-width: 90px; padding: 10px 6px; font-size: 12px; white-space: nowrap; }
 
         button { padding: 12px; background: var(--accent-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.2s; }
-        /* button:hover { background: var(--accent-hover); } */
+        button:hover { background: var(--accent-hover); }
         .multi-btn { background: #27ae60; }
         .multi-btn:hover { background: #219653; }
         .chat-input { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 5px; margin-top: 10px; }
@@ -283,6 +283,157 @@
             100% { transform: translateY(38px); opacity: 0; }
         }
 
+        .state-isinma {
+            background: linear-gradient(135deg, #fff1f2, #ffe4e6) !important;
+            border: 1px solid #fb7185 !important;
+            box-shadow: inset 0 0 10px rgba(244, 63, 94, 0.2), 0 4px 15px rgba(244, 63, 94, 0.25) !important;
+        }
+        .state-isinma .q-left_eye,
+        .state-isinma .q-right_eye { display: block; }
+        .state-isinma .bot-svg {
+            fill: #e11d48 !important;
+            animation: heat-pulse 0.8s infinite alternate ease-in-out;
+        }
+        .heat-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            display: none;
+            z-index: 2;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        .state-isinma .heat-container { display: block; }
+        .heat-wave {
+            position: absolute;
+            background: rgba(255, 87, 87, 0.35);
+            border-radius: 50%;
+            filter: blur(4px);
+            animation: rise-heat 1.6s infinite ease-out;
+        }
+        .heat-wave:nth-child(1) { width: 14px; height: 14px; left: 20px; bottom: 10px; animation-delay: 0s; }
+        .heat-wave:nth-child(2) { width: 18px; height: 18px; right: 22px; bottom: 8px; animation-delay: 0.6s; }
+
+        @keyframes rise-heat {
+            0% { transform: translateY(0) scale(0.6); opacity: 0.8; }
+            100% { transform: translateY(-40px) scale(1.6); opacity: 0; }
+        }
+        @keyframes heat-pulse {
+            0% { transform: scale(0.97); }
+            100% { transform: scale(1.03) rotate(1deg); }
+        }
+        .hot-badge{display: none}
+        .state-isinma .hot-badge {
+            display: block;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e11d48;
+            color: #fff;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 6;
+        }
+        /* 6. KOD HATASI (KAYMASIZ, TAM OTURAN SHELL AKIŞI) */
+        .state-hata {
+            background: #030712 !important;
+            border: 1px solid #064e3b !important;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4) !important;
+        }
+        .matrix-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            display: none;
+            z-index: 2;
+            overflow: hidden;
+            border-radius: 11px;
+            opacity: 0.7;
+        }
+        .state-hata .matrix-container { display: flex; justify-content: flex-start; align-items: flex-start; }
+        .terminal-stream {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            color: #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 5px;
+            line-height: 7px;
+            animation: full-terminal-scroll 1.8s infinite linear;
+        }
+        .state-hata .q-left_eye,
+        .state-hata .q-right_eye { display: block; }
+        .state-hata .bot-svg {
+            fill: #00ff41 !important;
+            filter: drop-shadow(0 0 5px rgba(0, 255, 65, 0.9));
+            animation: glitch-anim 0.4s infinite alternate ease-in-out;
+            z-index: 5;
+        }
+
+        @keyframes full-terminal-scroll {
+            0% { transform: translateY(-50%); }
+            100% { transform: translateY(0%); }
+        }
+        @keyframes glitch-anim {
+            0% { transform: translate(0, 0) scale(1); }
+            20% { transform: translate(-1px, 1px) scale(1.02); }
+            40% { transform: translate(1px, -1px) scale(0.98); }
+            60% { transform: translate(-1px, -1px) scale(1.01); }
+            80% { transform: translate(1px, 1px) scale(0.99); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* 5. İNTERNET KOPMASI (5 ÇEKMEYEN ÇUBUK) */
+        .state-kopuk {
+            background: linear-gradient(135deg, #fff5f5, #fed7d7) !important;
+            border: 1px solid #feb2b2 !important;
+        }
+        .state-kopuk .q-left_eye,
+        .state-kopuk .q-right_eye { display: block; }
+        .state-kopuk .bot-svg {
+            fill: #e53e3e !important;
+            animation: signal-shake 0.8s infinite ease-in-out;
+        }
+        .signal-container{display: none}
+        .state-kopuk .signal-container {
+            position: absolute;
+            top: -12px;
+            right: 0;
+            display: flex;
+            align-items: flex-end;
+            gap: 2.5px;
+            pointer-events: none;
+            z-index: 6;
+        }
+        .signal-bar {
+            width: 2px;
+            background-color: #cbd5e1;
+            border-radius: 2px;
+            animation: signal-fade 1.2s infinite alternate ease-in-out;
+        }
+        .signal-bar:nth-child(1) { height: 3px; animation-delay: 0.1s; }
+        .signal-bar:nth-child(2) { height: 6px; animation-delay: 0.2s; }
+        .signal-bar:nth-child(3) { height: 9px; animation-delay: 0.3s; }
+        .signal-bar:nth-child(4) { height: 11px; animation-delay: 0.4s; }
+        .signal-bar:nth-child(5) { height: 14px; animation-delay: 0.5s; }
+
+        @keyframes signal-fade {
+            0%, 100% { opacity: 0.3; background-color: #cbd5e1; }
+            50% { opacity: 0.9; background-color: #e53e3e; }
+        }
+        @keyframes signal-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-1px) rotate(-1deg); }
+            75% { transform: translateX(1px) rotate(1deg); }
+        }
+
         .settings-content { display: none; margin-bottom: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;  }
         .settings-content.open { display: block; }
         .master-toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding: 6px 10px; background: rgba(92, 103, 242, 0.1); border-radius: 6px; font-size: 13px; font-weight: bold; color: var(--accent-color); }
@@ -332,6 +483,42 @@
                 <span class="snowflake"></span>
                 <span class="snowflake"></span>
                 <span class="snowflake"></span>
+            </div>
+            <div class="hot-badge">~</div>
+            <div class="heat-container">
+                <span class="heat-wave"></span>
+                <span class="heat-wave"></span>
+                <span class="heat-wave"></span>
+            </div>
+            <div class="matrix-container">
+                <div class="terminal-stream">
+                    $ sudo start core
+                    > init kernel v6.4
+                    [OK] mounted fs
+                    > parsing cfg/env
+                    ERR: null ref
+                    > trace: 0x00FF41
+                    > dumping stack
+                    $ chmod 777 /sys
+                    > flush cache
+                    $ sudo start core
+                    > init kernel v6.4
+                    [OK] mounted fs
+                    > parsing cfg/env
+                    ERR: null ref
+                    > trace: 0x00FF41
+                    > dumping stack
+                    $ chmod 777 /sys
+                    $ sudo start core
+                    > init kernel v6.4
+                </div>
+            </div>
+            <div class="signal-container">
+                <span class="signal-bar"></span>
+                <span class="signal-bar"></span>
+                <span class="signal-bar"></span>
+                <span class="signal-bar"></span>
+                <span class="signal-bar"></span>
             </div>
             <div class="radar-dot"></div>
             <div class="popup-bubble" id="popupMsg" style="display:none;">Hadi artık!</div>
@@ -535,11 +722,24 @@
         } else if (act.includes('dondu') || act.includes('buz') || act.includes('freeze')) {
             btn.classList.add('state-dondu');
             document.getElementById('popupMsg').style.display = 'none';
-        } else {
+        }else if (act.includes('ısınma') || act.includes('thermodynamics') || act.includes('isinma')) {
+            btn.classList.add('state-isinma');
+            document.getElementById('popupMsg').style.display = 'none';
+        }
+        else if (act.includes('code')) {
+            btn.classList.add('state-hata');
+            document.getElementById('popupMsg').style.display = 'none';
+        }
+        else if (act.includes('wifi')) {
+            btn.classList.add('state-kopuk');
+            document.getElementById('popupMsg').style.display = 'none';
+        }
+        else {
             btn.classList.add('state-uyuyor');
         }
     }
-
+    // set(window.botRef, 'code');
+    
     function startRandomizedWaitingPopups() {
         const triggerPopup = () => {
             const randomText = waitingPhrases[Math.floor(Math.random() * waitingPhrases.length)];
@@ -561,7 +761,7 @@
         }
     });
 
-    set(window.botRef, 'dondu');
+
 
     const settingsPlatforms = {
         Litmach: { logo: 'https://cdn.aptoide.com/imgs/2/3/a/23ab121f6b622276ac8d7643edac2079_icon.png', active: true, minutes: 2 },
