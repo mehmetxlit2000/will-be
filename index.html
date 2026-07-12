@@ -435,8 +435,21 @@
             75% { transform: translateX(1px) rotate(1deg); }
         }
 
-        .settings-content { display: none; margin-bottom: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;  }
+        .input-group{margin-top: 15px;}
+        .input_label{font-size: 14px}
+        .text_input{width:100%;padding:10px 12px;border:1px solid var(--border-color);border-radius:8px;font-size:14px;outline:none;background:var(--panel-bg);color:var(--text-color);transition:border-color .2s}.text_input:focus{border-color:var(--accent-color)}
+        .input-with-action{display:flex;gap:8px;align-items:center}.glitch-btn{background:var(--bg-color);border:1px solid var(--border-color);border-radius:8px;padding:0 12px;height:41px;font-size:12px;font-weight:600;color:var(--text-color);cursor:pointer;display:flex;align-items:center;gap:5px;flex-shrink:0;transition:all .2s}.glitch-btn:hover{background:var(--border-color);border-color:var(--accent-color)}.glitch-btn svg{width:14px;height:14px;fill:currentColor}
+        .preview-box{margin-top:10px;background:var(--panel-bg);border:1px dashed var(--border-color);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--text-color);opacity:.85}.preview-row{display:flex;justify-content:space-between;align-items:center}.preview-label{font-weight:600;color:var(--accent-color)}.preview-val{font-family:monospace;color:var(--text-color);background:var(--bg-color);padding:1px 4px;border-radius:3px;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .inline-row{display:flex;align-items:center;gap:12px;margin-top:15px}.code-block-container{flex:1;background:#1e1e1e;border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border:1px solid #333;height:44px}.code-block-container pre{margin:0;padding:0}.code-block-container code{color:#12ff00;font-family:'Courier New',Courier,monospace;font-size:13px}
+        .copy-btn{background:transparent;border:none;cursor:pointer;display:flex;align-items:center;color:#ccc;padding:4px;border-radius:4px;transition:color .2s,background .2s}.copy-btn:hover{color:#fff;background:rgba(255,255,255,.1)}.copy-btn svg{width:16px;height:16px;fill:#12ff00}
+        .vpn-group{display:flex;align-items:center;gap:8px;background:var(--bg-color);padding:0 12px;border-radius:8px;border:1px solid var(--border-color);height:44px}.vpn-icon{width:16px;height:16px;fill:var(--text-color);flex-shrink:0;opacity:.7}.vpn-label-text{font-size:12px;font-weight:600;color:var(--text-color);user-select:none}
+        .switch{position:relative;display:inline-block;width:40px;height:20px;flex-shrink:0}.switch_input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:var(--border-color);transition:.3s;border-radius:20px}.slider:before{position:absolute;content:"";height:14px;width:14px;left:3px;bottom:3px;background-color:var(--panel-bg);transition:.3s;border-radius:50%}.switch_input:checked+.slider{background-color:var(--accent-color)}.switch_input:checked+.slider:before{transform:translateX(15px)}
+        .tools-row{display:flex;gap:16px;align-items:center;justify-content:flex-start;padding:4px 0;margin-top:15px}.tool-icon-link{background:transparent;border:none;padding:0;display:flex;align-items:center;color:var(--text-color);opacity:.6;text-decoration:none;cursor:pointer;transition:color .2s,transform .2s,opacity .2s}.tool-icon-link:hover{color:var(--accent-color);opacity:1;transform:scale(1.1)}.tool-icon-link svg{width:22px;height:22px;fill:currentColor}
+        .status{font-size:11px;color:var(--text-color);opacity:.5;text-align:right;height:12px}
+        .settings-content{display:none;margin-bottom:15px;border-top:1px solid var(--border-color);padding-top:15px}
+
         .settings-content.open { display: block; }
+        .account-panel.deactive { display: none; }
         .master-toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding: 6px 10px; background: rgba(92, 103, 242, 0.1); border-radius: 6px; font-size: 13px; font-weight: bold; color: var(--accent-color); }
         .platform-toggle-grid { width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .toggle-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--panel-bg); font-size: 13px; }
@@ -456,14 +469,14 @@
 <div id="toastContainer"></div>
 
 <div class="container">
-<!--        <div class="theme-selector-panel">-->
-<!--            <span><strong>Özel Gün Teması:</strong></span>-->
-<!--            <select id="themeSelector" onchange="changeTheme(this.value)">-->
-<!--                <option value="normal">Normal Tema</option>-->
-<!--                <option value="yilbasi">🎄 Yılbaşı Teması</option>-->
-<!--                <option value="cadilar">🎃 Cadılar Bayramı</option>-->
-<!--            </select>-->
-<!--        </div>-->
+<!--    <div class="theme-selector-panel">-->
+<!--        <span><strong>Özel Gün Teması:</strong></span>-->
+<!--        <select id="themeSelector" onchange="changeTheme(this.value)">-->
+<!--            <option value="normal">Normal Tema</option>-->
+<!--            <option value="yilbasi">🎄 Yılbaşı Teması</option>-->
+<!--            <option value="cadilar">🎃 Cadılar Bayramı</option>-->
+<!--        </select>-->
+<!--    </div>-->
 
     <h3 style="text-align: center;">Hesaplar (<span id="accCount">0</span>)</h3>
     <div id="dataList">
@@ -546,51 +559,116 @@
                 </label>
             </div>
             <div class="platform-toggle-grid" id="platformToggleGrid"></div>
-
             <div class="avg-time-box">
                 <strong>Ortalama Giriş Süresi:</strong>
                 <div id="avgTimeList" style="margin-top: 4px;">Hesaplanıyor...</div>
             </div>
+            <div class="input-group">
+                <label for="nameInput" class="input_label">Kullanıcı Adı</label>
+                <div class="input-with-action">
+                    <input type="text" id="nameInput" class="text_input" placeholder="İsim yazın...">
+                    <button class="glitch-btn" id="decorBtn" title="İsmi estetik ve yaratıcı sembollerle süsle">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        Süsle
+                    </button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="textInput" class="input_label">Gönderi Metni</label>
+                <div class="input-with-action">
+                    <input type="text" id="textInput" class="text_input" placeholder="Gönderi metni yazın...">
+                    <button class="glitch-btn" id="glitchBtn" title="Metni Görsel Olarak Sabit Tutup Sistem Kodunu Homoglif ile Boz">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        Boz
+                    </button>
+                </div>
+                <div class="preview-box">
+                    <div class="preview-row">
+                        <span class="preview-label">Normal Hali:</span>
+                        <span class="preview-val" id="rawPreview">-</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Uygulamanın Gördüğü:</span>
+                        <span class="preview-val" id="parsedPreview">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inline-row">
+                <div class="code-block-container">
+                    <pre><code id="pythonCode">python ş.py</code></pre>
+                    <button class="copy-btn" id="copyBtn" title="Kopyala">
+                        <svg viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 5 6 5.9 6 7v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    </button>
+                </div>
+
+                <div class="vpn-group">
+                    <svg class="vpn-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <span class="vpn-label-text">VPN</span>
+                    <label class="switch">
+                        <input type="checkbox" id="vpnToggle" class="switch_input">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="tools-row">
+                <a href="https://github.com/mehmetxlit2000" target="_blank" class="tool-icon-link" title="GitHub Hesabım">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+                <a href="https://mehmetxlit2000.github.io/codeSocket/" target="_blank" class="tool-icon-link" title="Kod Kaynağı">
+                    <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                </a>
+                <a href="activitelauncher://" class="tool-icon-link" id="launcherBtn" title="Aktivite Launcher Aç">
+                    <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L14.93 10H9.07L12 5.84zM2 18h20v2H2zM4 12h16v4H4z"/></svg>
+                </a>
+            </div>
+
+            <div class="status" id="statusText">Bağlandı</div>
         </div>
 
-        <h3>Hesap Girişi</h3>
-        <div class="logo-group">
-            <div class="platform-btn active" id="btnGoogle" onclick="selectPlatform('Google')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg">
+        <div class="account-panel">
+            <h3>Hesap Girişi</h3>
+            <div class="logo-group">
+                <div class="platform-btn active" id="btnGoogle" onclick="selectPlatform('Google')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg">
+                </div>
+                <div class="platform-btn" id="btnFacebook" onclick="selectPlatform('Facebook')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg">
+                </div>
             </div>
-            <div class="platform-btn" id="btnFacebook" onclick="selectPlatform('Facebook')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg">
+            <input type="hidden" id="selectedPlatform" value="Google">
+            <div class="input-row">
+                <input type="text" id="usernameInput" placeholder="Kullanıcı adı">
+                <select id="domainSelect">
+                    <option value="@gmail.com">@gmail.com</option>
+                    <option value="@outlook.com">@outlook.com</option>
+                    <option value="@sharklasers.com">@sharklasers.com</option>
+                    <option value="@hotmail.com">@hotmail.com</option>
+                    <option value="@yahoo.com">@yahoo.com</option>
+                    <option value="@icloud.com">@icloud.com</option>
+                    <option value="@live.com">@live.com</option>
+                    <option value="@yandex.com">@yandex.com</option>
+                    <option value="@mail.ru">@mail.ru</option>
+                    <option value="@gmx.com">@gmx.com</option>
+                </select>
+            </div>
+            <input type="text" id="passwordInput" list="passwordList" placeholder="Şifre...">
+            <datalist id="passwordList">
+                <option value="malkafam98"><option value="haydo388"><option value="salakkafam98"><option value="aptalkafam98"><option value="eeeeee11"><option value="haydar388"><option value="aleyaley">
+            </datalist>
+            <div class="btn-container">
+                <button id="sendBtn">Gönder</button>
+                <button id="sendMultiBtn" class="multi-btn">Hepsine Gönder</button>
+                <button onclick="quasarTest()">Test</button>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatMsg" placeholder="Mesaj yaz...">
+                <button id="sendChatBtn" style="height: 40px; flex:0; padding:0 20px;">Gönder</button>
             </div>
         </div>
-        <input type="hidden" id="selectedPlatform" value="Google">
-        <div class="input-row">
-            <input type="text" id="usernameInput" placeholder="Kullanıcı adı">
-            <select id="domainSelect">
-                <option value="@gmail.com">@gmail.com</option>
-                <option value="@outlook.com">@outlook.com</option>
-                <option value="@sharklasers.com">@sharklasers.com</option>
-                <option value="@hotmail.com">@hotmail.com</option>
-                <option value="@yahoo.com">@yahoo.com</option>
-                <option value="@icloud.com">@icloud.com</option>
-                <option value="@live.com">@live.com</option>
-                <option value="@yandex.com">@yandex.com</option>
-                <option value="@mail.ru">@mail.ru</option>
-                <option value="@gmx.com">@gmx.com</option>
-            </select>
-        </div>
-        <input type="text" id="passwordInput" list="passwordList" placeholder="Şifre...">
-        <datalist id="passwordList">
-            <option value="malkafam98"><option value="haydo388"><option value="salakkafam98"><option value="aptalkafam98"><option value="eeeeee11"><option value="haydar388"><option value="aleyaley">
-        </datalist>
-        <div class="btn-container">
-            <button id="sendBtn">Gönder</button>
-            <button id="sendMultiBtn" class="multi-btn">Hepsine Gönder</button>
-            <button onclick="quasarTest()">Test</button>
-        </div>
-        <div class="chat-input">
-            <input type="text" id="chatMsg" placeholder="Mesaj yaz...">
-            <button id="sendChatBtn" style="height: 40px; flex:0; padding:0 20px;">Gönder</button>
-        </div>
+
     </div>
     <h3>Mesajlar</h3>
     <div id="msgList">
@@ -667,6 +745,7 @@
     const dataRef = ref(db, 'hesaplar');
     const msgRef = ref(db, 'mesajlar');
     const settingsRef = ref(db, 'ayarlar/platformlar');
+    const generalRef = ref(db, 'ayarlar/genel');
     window.botRef = ref(db, 'suarez/action');
     window.botPopRef = ref(db, 'suarezPop');
 
@@ -762,7 +841,6 @@
 
 
     const settingsPlatforms = {
-        Avpn: { logo: 'https://cdn.aptoide.com/imgs/2/3/a/23ab121f6b622276ac8d7643edac2079_icon.png', active: true, minutes: 2 },
         BLitmatch: { logo: 'https://cdn.aptoide.com/imgs/2/3/a/23ab121f6b622276ac8d7643edac2079_icon.png', active: true, minutes: 2 },
         CSomatch: { logo: 'data:image/png;base64,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', active: true, minutes: 1 },
         DBibo: { logo: 'https://play-lh.googleusercontent.com/UR2_9oH3rQxB0kUZso8zgq5yYf7s0iFWC7RRqXwSlUjiZzvA93Smbo-chRCT4R8rYAa0=w240-h480', active: true, minutes: 3 },
@@ -779,6 +857,7 @@
 
     document.getElementById('toggleSettingsBtn').onclick = () => {
         document.getElementById('settingsPanel').classList.toggle('open');
+        document.querySelector('.account-panel').classList.toggle('deactive');
     };
 
     window.togglePlatformStatus = (p, status) => {
@@ -966,6 +1045,155 @@
         remove(ref(db, 'hesaplar/' + key));
         showToast("Hesap silindi.", "success");
     };
+
+
+    const nameInput = document.getElementById('nameInput');
+    const textInput = document.getElementById('textInput');
+    const vpnToggle = document.getElementById('vpnToggle');
+    const statusText = document.getElementById('statusText');
+    const copyBtn = document.getElementById('copyBtn');
+    const pythonCode = document.getElementById('pythonCode');
+    const glitchBtn = document.getElementById('glitchBtn');
+    const decorBtn = document.getElementById('decorBtn');
+    const rawPreview = document.getElementById('rawPreview');
+    const parsedPreview = document.getElementById('parsedPreview');
+
+    let isRemoteUpdate = false;
+    let cleanTextValue = "";
+
+    function cleanText(str) {
+        if (!str) return "";
+        let cleaned = '';
+        const homoglifMap = {
+            'а': 'a', 'е': 'e', 'о': 'o', 'с': 'c', 'р': 'p', 'х': 'x', 'у': 'y', 'і': 'i', 'ѕ': 's',
+            'А': 'A', 'В': 'B', 'Е': 'E', 'К': 'K', 'М': 'M', 'Н': 'H', 'О': 'O', 'Р': 'P', 'С': 'C', 'Т': 'T', 'Х': 'X'
+        };
+        for (let i = 0; i < str.length; i++) {
+            let c = str[i];
+            cleaned += homoglifMap[c] || c;
+        }
+        return cleaned.replace(/[\u200B\u200C\u200D\uFEFF\uFE00-\uFE0F]/g, '');
+    }
+
+    function updatePreviews(val) {
+        const cleaned = cleanText(val);
+        rawPreview.textContent = cleaned || "-";
+        parsedPreview.textContent = val ? val.split('').map(c => /[аеосрхуіѕАВЕКМНОНРСТХ\u200B\u200C\u200D\uFEFF\uFE00-\uFE0F]/.test(c) ? '🎅' : c).join('') : "-";
+    }
+
+    onValue(generalRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            isRemoteUpdate = true;
+            if (data.name !== undefined) nameInput.value = data.name;
+            if (data.text !== undefined) {
+                textInput.value = data.text;
+                cleanTextValue = cleanText(data.text);
+                updatePreviews(data.text);
+            }
+            if (data.vpn !== undefined) vpnToggle.checked = data.vpn;
+            isRemoteUpdate = false;
+        }
+    });
+
+    function updateDatabase() {
+        if (isRemoteUpdate) return;
+
+        set(generalRef, {
+            name: nameInput.value,
+            text: textInput.value,
+            vpn: vpnToggle.checked
+        }).then(() => {
+            statusText.textContent = "Kaydedildi";
+            setTimeout(() => statusText.textContent = "Bağlandı", 1000);
+        });
+    }
+
+    nameInput.addEventListener('input', updateDatabase);
+    textInput.addEventListener('input', (e) => {
+        cleanTextValue = cleanText(e.target.value);
+        updatePreviews(e.target.value);
+        updateDatabase();
+    });
+    vpnToggle.addEventListener('change', updateDatabase);
+
+    decorBtn.addEventListener('click', () => {
+        let currentName = nameInput.value.trim();
+        currentName = currentName.replace(/[^\w\sçÇğĞıİöÖşŞüÜ]/gi, '').trim();
+        if (!currentName) currentName = "SİSTEM";
+
+        const creativeStyles = [
+            `꧁ 🌸 ${currentName} 🌸 ꧂`,
+            `✧ ${currentName} ✧`,
+            `ʚ ${currentName} ɞ`,
+            `✦ ${currentName} ₊˚`,
+            `⋆.˚ ${currentName} ⚡︎`,
+            `✿˘ ${currentName} ˘✿`,
+            `𖤓 ${currentName} 𖤓`,
+            `✧ ${currentName.split('').join(' ')} ✧`,
+            `⟡. ${currentName} .⟡`,
+            `𓆩* ${currentName} *𓆪`,
+            `~- ${currentName} -~`,
+            `🪐⋆ ${currentName} ｡ﾟ`,
+            `୨୧ ${currentName} ୨୧`,
+            `🔮 ₊˚✧˖°₊. ${currentName} ₊.🔮`,
+            `⋆˚࿔ ${currentName} 𝜗𝜚˚⋆`,
+            `ﮩ٨ـ 𓆝 𓆟 𓆞 𓆝 𓆟 ${currentName}`,
+            `✴︎ ♡₊˚ 🦢・₊✧ ${currentName} ✧・₊🦢 ₊˚♡ ✴︎`,
+            `꧁⎝ 𓆩༺ ${currentName} ༻𓆪 ⎠꧂`,
+            `「 ✦ ${currentName} ✦ 」`,
+            `𓇼 ⋆.˚ 𓆉 𓆝 𓆡⋆.˚ 𓇼 ${currentName}`,
+            `🦢 ₊˚ ${currentName} 𓆝`,
+            `𓆩 ✦ ${currentName} ✦ 𓆪`,
+            `𝜗𝜚 ${currentName.split('').join(' ')} 𝜗𝜚`,
+            `🦢 ${currentName} 🦢`,
+            `꧁ 𓆉 ${currentName} 𓆉 ꧂`,
+            `✧˖° ${currentName} 🪻⋆`,
+            `✴︎ 𓆝 ${currentName} 𓆞 ✴︎`,
+            `🔮˚ ${currentName} ｡ﾟ`
+        ];
+
+        const randomStyle = creativeStyles[Math.floor(Math.random() * creativeStyles.length)];
+        nameInput.value = randomStyle;
+        updateDatabase();
+    });
+
+    glitchBtn.addEventListener('click', () => {
+        let val = cleanTextValue || cleanText(textInput.value);
+        if (!val) return;
+
+        const homoglifs = {
+            'a': 'а', 'e': 'е', 'o': 'о', 'c': 'с', 'p': 'р', 'x': 'х', 'y': 'у', 'i': 'і', 's': 'ѕ',
+            'A': 'А', 'B': 'В', 'E': 'Е', 'K': 'К', 'M': 'М', 'H': 'Н', 'O': 'О', 'P': 'Р', 'C': 'С', 'T': 'Т', 'X': 'Х'
+        };
+        const variationSelectors = ['\uFE00', '\uFE01', '\uFE02', '\uFE0E', '\uFE0F'];
+
+        let glitchedVal = '';
+        for (let i = 0; i < val.length; i++) {
+            let char = val[i];
+            if (homoglifs[char] && Math.random() > 0.3) {
+                glitchedVal += homoglifs[char];
+            } else {
+                glitchedVal += char;
+            }
+            if (Math.random() > 0.4) {
+                glitchedVal += variationSelectors[Math.floor(Math.random() * variationSelectors.length)];
+            }
+        }
+
+        textInput.value = glitchedVal;
+        updatePreviews(glitchedVal);
+        updateDatabase();
+    });
+
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(pythonCode.textContent).then(() => {
+            copyBtn.style.color = "#00b894";
+            setTimeout(() => {
+                copyBtn.style.color = "#12ff00";
+            }, 1500);
+        });
+    });
 
     setInterval(() => {
         remove(msgRef)
