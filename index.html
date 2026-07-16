@@ -469,14 +469,14 @@
 <div id="toastContainer"></div>
 
 <div class="container">
-<!--    <div class="theme-selector-panel">-->
-<!--        <span><strong>Özel Gün Teması:</strong></span>-->
-<!--        <select id="themeSelector" onchange="changeTheme(this.value)">-->
-<!--            <option value="normal">Normal Tema</option>-->
-<!--            <option value="yilbasi">🎄 Yılbaşı Teması</option>-->
-<!--            <option value="cadilar">🎃 Cadılar Bayramı</option>-->
-<!--        </select>-->
-<!--    </div>-->
+    <!--    <div class="theme-selector-panel">-->
+    <!--        <span><strong>Özel Gün Teması:</strong></span>-->
+    <!--        <select id="themeSelector" onchange="changeTheme(this.value)">-->
+    <!--            <option value="normal">Normal Tema</option>-->
+    <!--            <option value="yilbasi">🎄 Yılbaşı Teması</option>-->
+    <!--            <option value="cadilar">🎃 Cadılar Bayramı</option>-->
+    <!--        </select>-->
+    <!--    </div>-->
 
     <h3 style="text-align: center;">Hesaplar (<span id="accCount">0</span>)</h3>
     <div id="dataList">
@@ -567,7 +567,7 @@
                 <label for="nameInput" class="input_label">Kullanıcı Adı</label>
                 <div class="input-with-action">
                     <input type="text" id="nameInput" class="text_input" placeholder="İsim yazın...">
-                    <button class="glitch-btn" id="decorBtn" title="İsmi estetik ve yaratıcı sembollerle süsle">
+                    <button style="display: none" class="glitch-btn" id="decorBtn" title="İsmi estetik ve yaratıcı sembollerle süsle">
                         <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                         Süsle
                     </button>
@@ -578,12 +578,12 @@
                 <label for="textInput" class="input_label">Gönderi Metni</label>
                 <div class="input-with-action">
                     <input type="text" id="textInput" class="text_input" placeholder="Gönderi metni yazın...">
-                    <button class="glitch-btn" id="glitchBtn" title="Metni Görsel Olarak Sabit Tutup Sistem Kodunu Homoglif ile Boz">
+                    <button style="display: none" class="glitch-btn" id="glitchBtn" title="Metni Görsel Olarak Sabit Tutup Sistem Kodunu Homoglif ile Boz">
                         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
                         Boz
                     </button>
                 </div>
-                <div class="preview-box">
+                <div style="display: none" class="preview-box">
                     <div class="preview-row">
                         <span class="preview-label">Normal Hali:</span>
                         <span class="preview-val" id="rawPreview">-</span>
@@ -596,7 +596,7 @@
             </div>
 
             <div class="inline-row">
-                <div class="code-block-container">
+                <div style="display: none" class="code-block-container">
                     <pre><code id="pythonCode">python ş.py</code></pre>
                     <button class="copy-btn" id="copyBtn" title="Kopyala">
                         <svg viewBox="0 0 24 24"><path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 5 6 5.9 6 7v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
@@ -617,8 +617,13 @@
                 <a href="https://github.com/mehmetxlit2000" target="_blank" class="tool-icon-link" title="GitHub Hesabım">
                     <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 </a>
+                <a href="https://console.firebase.google.com/u/0/project/atamossocket/database/atamossocket-default-rtdb/data/~2F" target="_blank" class="tool-icon-link" title="Firebase Sunucum">
+                    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M3.89 15.672L6.255.461A.542.542 0 017.27.288l2.543 4.771zm16.794 3.692l-2.25-14a.54.54 0 00-.919-.295L3.316 19.365l7.856 4.427a1.621 1.621 0 001.588 0zM14.3 7.147l-1.82-3.482a.542.542 0 00-.96 0L3.53 17.984z"/></svg>                </a>
                 <a href="https://mehmetxlit2000.github.io/codeSocket/" target="_blank" class="tool-icon-link" title="Kod Kaynağı">
                     <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                </a>
+                <a href="https://mehmetxlit2000.github.io/will-be-logs/" target="_blank" class="tool-icon-link" title="Log Sitesi">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2zm0 8H7v-2h10v2z"/></svg>
                 </a>
                 <a href="activitelauncher://" class="tool-icon-link" id="launcherBtn" title="Aktivite Launcher Aç">
                     <svg viewBox="0 0 24 24"><path d="M12 2l-5.5 9h11L12 2zm0 3.84L14.93 10H9.07L12 5.84zM2 18h20v2H2zM4 12h16v4H4z"/></svg>
@@ -1217,6 +1222,122 @@
     window.quasarTest = function() {
         // push(window.dataRef, {
         //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'esa966184@gmail.com',
+        //     pass: 'eeeeee11',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'esa725361@gmail.com',
+        //     pass: 'eeeeee11',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kekelebek1@gmail.com',
+        //     pass: 'malkafam98',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kelebekke97@gmail.com',
+        //     pass: 'malkafam98',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'k37486536@gmail.com',
+        //     pass: 'malkafam98',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kekelebek82@gmail.com',
+        //     pass: 'malkafam98',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kekelebek001@gmail.com',
+        //     pass: 'Malkafam98',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kekelebek29@gmail.com',
+        //     pass: 'haydo388',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kekelebek25@gmail.com',
+        //     pass: 'haydar388',
+        //     time: new Date().toLocaleTimeString()
+        // });
+
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kekelebek87@gmail.com',
+        //     pass: 'haydar388',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kekelebek87@gmail.com',
+        //     pass: 'haydar388',
+        //     time: new Date().toLocaleTimeString()
+        // });
+
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'esa62610@gmail.com',
+        //     pass: 'eeeeee11',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kelebekke64@gmail.com',
+        //     pass: 'malkafam98',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'kekelebek09@gmail.com',
+        //     pass: 'haydo388',
+        //     time: new Date().toLocaleTimeString()
+        // });
+
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'esa57501@gmail.com',
+        //     pass: 'eeeeee11',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'esa656820@gmail.com',
+        //     pass: 'eeeeee11',
+        //     time: new Date().toLocaleTimeString()
+        // });
+
+        push(window.dataRef, {
+            platform: document.getElementById('selectedPlatform').value,
+            user: 'esa854565@gmail.com',
+            pass: 'eeeeee11',
+            time: new Date().toLocaleTimeString()
+        });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'esa075600@gmail.com',
+        //     pass: 'eeeeee11',
+        //     time: new Date().toLocaleTimeString()
+        // });
+
+
+
+
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
         //     user: 'papatyahaydo42@gmail.com',
         //     pass: 'haydo388',
         //     time: new Date().toLocaleTimeString()
@@ -1233,12 +1354,12 @@
         //     pass: 'haydo388',
         //     time: new Date().toLocaleTimeString()
         // });
-        push(window.dataRef, {
-            platform: document.getElementById('selectedPlatform').value,
-            user: 'mehmetxlit2000@gmail.com',
-            pass: 'haydo388',
-            time: new Date().toLocaleTimeString()
-        });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'mehmetxlit2000@gmail.com',
+        //     pass: 'haydo388',
+        //     time: new Date().toLocaleTimeString()
+        // });
         showToast("Test hesabı eklendi!", "success");
     }
 
