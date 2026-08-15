@@ -2199,19 +2199,8 @@
 
     window.push = push;
     window.dataRef = ref(db, 'hesaplar');
-    let litCount = parseInt(localStorage.getItem('litCount')) || 9;
 
     window.quasarTest = function() {
-        litCount++;
-        localStorage.setItem('litCount', litCount);
-
-        push(window.dataRef, {
-            // 20 21 23 24 25...
-            platform: document.getElementById('selectedPlatform').value,
-            user: `mehmetolit20${litCount}@gmail.com`,
-            pass: 'malkafam',
-            time: new Date().toLocaleTimeString()
-        });
         // push(window.dataRef, {
         //     platform: document.getElementById('selectedPlatform').value,
         //     user: 'papatyahaydo42@gmail.com',
