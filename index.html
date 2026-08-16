@@ -1186,7 +1186,7 @@
             <div class="btn-container">
                 <button id="sendBtn">Gönder</button>
                 <button id="sendMultiBtn" class="multi-btn">Hepsine Gönder</button>
-                <!-- <button onclick="quasarTest()">Test</button> -->
+                <button onclick="quasarTest()">Test</button>
             </div>
             <div class="chat-input">
                 <input type="text" id="chatMsg" placeholder="Mesaj yaz...">
@@ -1216,7 +1216,7 @@
 
 <script id="engine-script" type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getDatabase, ref, push, onChildAdded, onValue, remove, onChildRemoved, set, get } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+    import { getDatabase, ref, push, onChildAdded, onValue, remove, onChildRemoved, set, get, runTransaction } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
     window.getDatabase = getDatabase;
     window.ref = ref;
@@ -1276,6 +1276,16 @@
         projectId: "atamos2-767d9",
     };
     const db = getDatabase(initializeApp(firebaseConfig));
+
+    // Sunucu saati ile senkron sayaç için offset (herkeste aynı saniyeyi göstermek için)
+    let serverTimeOffset = 0;
+    onValue(ref(db, '.info/serverTimeOffset'), (snap) => {
+        serverTimeOffset = snap.val() || 0;
+    });
+    function getServerNow() {
+        return Date.now() + serverTimeOffset;
+    }
+
     const dataRef = ref(db, 'hesaplar');
     const msgRef = ref(db, 'mesajlar');
     const settingsRef = ref(db, 'ayarlar/platformlar');
@@ -1633,21 +1643,18 @@
             const totalDuration = sleepMatch ? parseInt(sleepMatch[1], 10) : 60;
             const sleepInfoRef = ref(db, 'suarez/sleepInfo');
 
-            get(sleepInfoRef).then((snap) => {
-                const info = snap.val();
-                let seconds = totalDuration;
-
+            // Transaction: birden fazla kullanıcı aynı anda tetiklese bile
+            // sadece TEK bir başlangıç zamanı kaydedilir, herkes ona göre hesaplar.
+            runTransaction(sleepInfoRef, (info) => {
                 if (info && info.key === act && info.end) {
-                    // Aynı sleep turu (örn. sayfa yenilendi) - kaldığı yerden devam et
-                    const remainingMs = info.end - Date.now();
-                    seconds = remainingMs > 0 ? Math.ceil(remainingMs / 1000) : 0;
-                } else {
-                    // Yeni bir sleep turu başladı - şimdiki saate göre bitiş zamanını hesapla ve kaydet
-                    const endTime = Date.now() + totalDuration * 1000;
-                    set(sleepInfoRef, { key: act, end: endTime });
-                    seconds = totalDuration;
+                    return info; // Aynı sleep turu devam ediyor, dokunma
                 }
-
+                // Yeni sleep turu - SUNUCU saatine göre bitiş zamanı belirle
+                return { key: act, end: getServerNow() + totalDuration * 1000 };
+            }).then((result) => {
+                const info = result.snapshot.val();
+                const remainingMs = info.end - getServerNow();
+                const seconds = remainingMs > 0 ? Math.ceil(remainingMs / 1000) : 0;
                 startSureliBekleme(seconds);
             });
         } else if (act.includes('ban')) {
@@ -2201,6 +2208,7 @@
     window.dataRef = ref(db, 'hesaplar');
 
     window.quasarTest = function() {
+
         // push(window.dataRef, {
         //     platform: document.getElementById('selectedPlatform').value,
         //     user: 'papatyahaydo42@gmail.com',
